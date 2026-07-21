@@ -1,0 +1,470 @@
+{
+  "name": "HR Resume",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1L4QZSfyCr0nRojXXHuHY-DQQoZzO4f0j",
+          "mode": "list",
+          "cachedResultName": "Fatima_Azfar_CV.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/1L4QZSfyCr0nRojXXHuHY-DQQoZzO4f0j/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -48,
+        0
+      ],
+      "id": "fd8d5117-ef29-4918-b05d-8d07bca42d18",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zSWTBaFVgXkdXXHT",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        144,
+        0
+      ],
+      "id": "48fed8c7-088a-42cf-9b44-9e5627671cfb",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        368,
+        176
+      ],
+      "id": "a05c3832-6f5b-4f9a-bf57-a71646d214db",
+      "name": "Cohere Chat Model",
+      "credentials": {
+        "cohereApi": {
+          "id": "vlZ4lMYwBnkrbhlQ",
+          "name": "Cohere account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        848,
+        176
+      ],
+      "id": "ee0d3a41-9ed7-4c83-a09c-3977e79f073b",
+      "name": "Cohere Chat Model1",
+      "credentials": {
+        "cohereApi": {
+          "id": "vlZ4lMYwBnkrbhlQ",
+          "name": "Cohere account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1NSdNyoRt7thRzGZUY-BZNvWCXncb0_ZcIDJpBwpg2UM",
+          "mode": "list",
+          "cachedResultName": "HR Resume Handler",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSdNyoRt7thRzGZUY-BZNvWCXncb0_ZcIDJpBwpg2UM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSdNyoRt7thRzGZUY-BZNvWCXncb0_ZcIDJpBwpg2UM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Parse Resume JSON').item.json.name }}",
+            "AI Score": "={{ $json.AI_Engineer.score }}",
+            "DS Score": "={{ $json.Data_Scientist.score }}",
+            "CYS Score": "={{ $json.Cyber_Security_Analyst.score }}",
+            "Recommended Role": "={{ $json.recommendation }}",
+            "Email": "={{ $('Parse Resume JSON').item.json.email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "AI Score",
+              "displayName": "AI Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DS Score",
+              "displayName": "DS Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CYS Score",
+              "displayName": "CYS Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Recommended Role",
+              "displayName": "Recommended Role",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1392,
+        192
+      ],
+      "id": "1c860162-3b48-475f-9ba7-05348747489d",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7FXYabM9BeJLVFy9",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Resume:\n\n{{ $('Extract from File').item.json.text }}\n\nExtract:\n\n- Name\n- Email\n- Phone\n- Skills\n- Education\n- Experience\n- Projects\n- Certifications\n\nReturn ONLY valid JSON.",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are an expert HR resume parser.  Extract the following information from the resume.  Return ONLY valid JSON.  { \"name\":\"\", \"email\":\"\", \"phone\":\"\", \"skills\":[], \"education\":\"\", \"experience\":\"\", \"projects\":[], \"certifications\":[] }"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        336,
+        0
+      ],
+      "id": "1b3b9f82-0e9c-441f-8612-18a50613436e",
+      "name": "Resume Parser"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Candidate Resume:\n\n{{ JSON.stringify($json) }}\n\n--------------------------------\n\nAI JOB DESCRIPTION\n\nRequired Skills:\nPython\nMachine Learning\nDeep Learning\nTensorFlow\nPyTorch\nLLMs\nRAG\nGit\n\n--------------------------------\n\nDATA SCIENCE JOB DESCRIPTION\n\nRequired Skills:\nPython\nSQL\nStatistics\nPower BI\nExcel\nMachine Learning\nData Visualization\nPandas\nNumPy\n\n--------------------------------\n\nCYBER SECURITY JOB DESCRIPTION\n\nRequired Skills:\nLinux\nNetworking\nOWASP\nKali Linux\nBurp Suite\nSIEM\nPython\nPen Testing",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are an HR recruiter.  Your task is to compare the candidate's resume with THREE different job roles.  Evaluate the candidate for:  1. AI Engineer 2. Data Scientist 3. Cyber Security Analyst  For each role:  - Score from 0-100 - List matched skills - List missing skills - Give one short remark  Finally, recommend ONLY ONE role with the highest score.  Return ONLY valid JSON. Do NOT wrap the response in ```json or ``` markdown. Do NOT include any explanation."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        848,
+        0
+      ],
+      "id": "b70a61df-bc02-410b-9ae3-34cca42d6a95",
+      "name": "Role Matcher"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        0
+      ],
+      "id": "e7f7f8b0-98b3-4951-8dcd-fe588ade028a",
+      "name": "Google Drive Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "let text = $json.text;\n\n// Remove markdown code fences\ntext = text.replace(/```json/g, \"\")\n           .replace(/```/g, \"\")\n           .trim();\n\n// Convert text to JSON\nconst resume = JSON.parse(text);\n\nreturn [\n  {\n    json: resume\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        656,
+        0
+      ],
+      "id": "4f42f445-c928-48c9-a751-e37fe6ef30cd",
+      "name": "Parse Resume JSON"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = JSON.parse($json.text);\n\nreturn [\n  {\n    json: data\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1168,
+        0
+      ],
+      "id": "45f8b617-d5e8-4ea6-b6cf-9baeee6312b0",
+      "name": "Parse Role JSON"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e7a5267c-5d7a-4871-9d6c-bcacf4e820d5",
+              "leftValue": "={{ $json.recommendation }}",
+              "rightValue": 70,
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1392,
+        -32
+      ],
+      "id": "dceca3b5-bbef-442f-8648-b1860b6845a2",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Parse Resume JSON').item.json.email }}",
+        "subject": "Congratulations! You Have Been Shortlisted 🎉",
+        "message": "=<h2>Congratulations, {{ $('Parse Resume JSON').item.json.name }}!</h2>  <p>Thank you for applying to our company.</p>  <p>We are pleased to inform you that you have been shortlisted for the position of:</p>  <h3>{{ $('Parse Role JSON').item.json.recommendation }}</h3>  <p>Our HR team will contact you soon regarding the interview process.</p> <p>Best Regards,<br> HR Team</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1648,
+        -48
+      ],
+      "id": "6108182a-5504-4ae8-8a6d-dc740ffe036d",
+      "name": "Send a message",
+      "webhookId": "dbda524f-ef56-43e5-b626-bdf081a98ce5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "bUYvs66mg67LkKPu",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Resume Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Resume Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Role Matcher",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resume Parser": {
+      "main": [
+        [
+          {
+            "node": "Parse Resume JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Role Matcher": {
+      "main": [
+        [
+          {
+            "node": "Parse Role JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Resume JSON": {
+      "main": [
+        [
+          {
+            "node": "Role Matcher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Role JSON": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "bb9360f1-4871-4d27-b724-8cbfc144621d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6cf217929e7ccbedd94dee0a36e9f13864ce214057460665c251ec623f0ba637"
+  },
+  "nodeGroups": [],
+  "id": "4w5xsfB7iDedsJQv",
+  "tags": []
+}
