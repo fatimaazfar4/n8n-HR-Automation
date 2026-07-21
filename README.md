@@ -59,8 +59,9 @@ The workflow performs the following steps:
 Example:
 
 ```
-<img width="731" height="151" alt="Screenshot 2026-07-21 230229" src="https://github.com/user-attachments/assets/e94cb1ae-cb97-44d9-bd16-11c816c214a5" />
-
+<p align="center">
+  <img width="900" alt="Workflow" src="https://github.com/user-attachments/assets/e94cb1ae-cb97-44d9-bd16-11c816c214a5" />
+</p>
 ```
 
 ## 🔒 Notes
