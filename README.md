@@ -77,7 +77,3 @@ This project is available for educational and portfolio purposes.
 **Author**
 
 **Fatima Azfar**
-
-- BS Computer Science, NED University of Engineering & Technology
-- AI & Automation Enthusiast
-- LinkedIn: https://www.linkedin.com/in/fatimaazfar/
